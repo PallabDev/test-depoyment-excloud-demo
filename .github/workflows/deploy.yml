@@ -1,0 +1,21 @@
+name: Pallab-Excloud Deploy
+on:
+  push:
+    branches:
+      - main
+jobs:
+  # first connect with the server suing host and username and sshkey
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Deploy to Server
+        uses: appleboy/ssh-action@master
+        with:
+          host: 210.79.129.141
+          username: ubuntu
+          key: ${{ secrets.SSH_KEY }}
+          script: |
+            cd /home/ubuntu/pallab/test-depoyment-excloud-demo
+            git pull origin main
+            npm install
+            pm2 restart pallab-server
