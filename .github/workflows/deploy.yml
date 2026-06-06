@@ -14,8 +14,16 @@ jobs:
           host: 210.79.129.141
           username: ubuntu
           key: ${{ secrets.SSH_KEY }}
+          # uncomment this if you don't want to use docker for ci/cd
+          # script: |
+          #   cd /home/ubuntu/pallab/test-depoyment-excloud-demo
+          #   git pull origin main
+          #   npm install
+          #   pm2 restart pallab-server
+
           script: |
-            cd /home/ubuntu/pallab/test-depoyment-excloud-demo
-            git pull origin main
-            npm install
-            pm2 restart pallab-server
+            cd /home/ubuntu/pallab
+            docker pull pallabdev/pallab-base:latest
+            docker stop pallab-server || true
+            docker rm pallab-server || true
+            docker run -d --name pallab-server -p 3000:3000 pallabdev/pallab-base:latest
