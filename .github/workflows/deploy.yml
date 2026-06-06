@@ -23,7 +23,7 @@ jobs:
 
           script: |
             cd /home/ubuntu/pallab
-            docker pull pallabdev/pallab-base:latest
-            docker stop pallab-server || true
-            docker rm pallab-server || true
-            docker run -d --name pallab-server -p 3000:3000 pallabdev/pallab-base:latest
+            sudo docker pull pallabdev/pallab-base:latest
+            sudo docker stop pallab-server || true
+            sudo docker rm pallab-server || true
+            sudo docker run -d --name pallab-server -p 3000:3000 pallabdev/pallab-base:latest
